@@ -19,6 +19,7 @@ PIDFILE=${PIDDIR}/manager.pid
 LOGFILE=/var/log/gearman-manager.log
 CONFIGDIR=/etc/gearman-manager
 GEARMANUSER="gearman"
+GEARMANGROUP="gearman"
 PARAMS="-c ${CONFIGDIR}/config.ini"
 
 test -x ${DAEMON} || exit 0
@@ -36,10 +37,12 @@ start()
   if start-stop-daemon \
     --start \
     --startas $DAEMON \
+    --chuid ${GEARMANUSER}:${GEARMANGROUP} \
     --pidfile $PIDFILE \
     -- -P $PIDFILE \
        -l $LOGFILE \
        -u $GEARMANUSER \
+       -x 3600 \
        -d \
        $PARAMS 
   then
@@ -56,6 +59,7 @@ stop()
   log_daemon_msg "Stopping Gearman Manager"
   if start-stop-daemon \
     --stop \
+    --chuid ${GEARMANUSER}:${GEARMANGROUP} \
     --oknodo \
     --retry 20 \
     --pidfile $PIDFILE

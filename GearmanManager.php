@@ -498,6 +498,7 @@ abstract class GearmanManager {
             }
 
             posix_setuid($user['uid']);
+            posix_setgid($user['gid']);
             if (posix_geteuid() != $user['uid']) {
                 $this->show_help("Unable to change user to {$this->user} (UID: {$user['uid']}).");
             }
