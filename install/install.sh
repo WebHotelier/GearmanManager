@@ -4,6 +4,7 @@ DAEMON=/usr/local/bin/gearman-manager
 INIT_D=/etc/init.d/gearman-manager
 INSTALL_DIR=/usr/local/share/gearman-manager
 CONFIG_DIR=/etc/gearman-manager
+WORKER_DIR=/var/gearman/workers
 
 # we're going to be mucking about, so we need to be root/sudo'd
 if [ "$(id -u)" != "0" ]; then
@@ -66,9 +67,13 @@ ln -fs ${INSTALL_DIR}/${PHPLIB}-manager.php ${DAEMON}
 echo "Installing executable to ${DAEMON}"
 
 # create config folders
-mkdir -p /etc/gearman-manager/workers
+mkdir -p ${CONFIG_DIR}
 cp ${WORKING_DIR}/config.dist.ini ${CONFIG_DIR}/config.ini
 echo "Installing configs to ${CONFIG_DIR}"
+
+# create worker folders
+mkdir -p ${WORKER_DIR}
+chown gearman:gearman ${WORKER_DIR}
 
 # install init script
 mv ${WORKING_DIR}/${DISTRO}.build.sh ${INIT_D}
