@@ -75,6 +75,10 @@ mv ${WORKING_DIR}/${DISTRO}.build.sh ${INIT_D}
 chmod +x ${INIT_D}
 echo "Installing init script to ${INIT_D}"
 
+# touch log file and set gearman ownership
+touch /var/log/gearman-manager.log
+chown gearman:gearman /var/log/gearman-manager.log
+
 echo
 echo "Install ok!  Run ${INIT_D} to start and stop"
 echo "Worker scripts can be installed in ${CONFIG_DIR}/workers, configuration can be edited in ${CONFIG_DIR}/config.ini"
