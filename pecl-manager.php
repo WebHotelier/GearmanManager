@@ -13,6 +13,7 @@
 declare(ticks = 1);
 
 require dirname(__FILE__)."/GearmanManager.php";
+require dirname(__FILE__)."/JobFailProtection.php";
 
 /**
  * Implements the worker portions of the pecl/gearman library
@@ -50,13 +51,13 @@ class GearmanPeclManager extends GearmanManager {
 
         while(!$this->stop_work){
 
-            if(@$thisWorker->work() ||
+            if($thisWorker->work() ||
                $thisWorker->returnCode() == GEARMAN_IO_WAIT ||
                $thisWorker->returnCode() == GEARMAN_NO_JOBS) {
 
                 if ($thisWorker->returnCode() == GEARMAN_SUCCESS) continue;
 
-                if (!@$thisWorker->wait()){
+                if (!$thisWorker->wait()){
                     if ($thisWorker->returnCode() == GEARMAN_NO_ACTIVE_FDS){
                         sleep(5);
                     }
@@ -107,6 +108,11 @@ class GearmanPeclManager extends GearmanManager {
             $func = $job_name;
         }
 
+        if (!JobFailProtection::pushJob($job->unique())) {
+            $this->log("($h) Abort Processing Job - loop detected: ".$job->unique(), GearmanManager::LOG_LEVEL_DEBUG);
+            return false;
+        }
+
         if(empty($objects[$job_name]) && !function_exists($func) && !class_exists($func, false)){
 
             if(!isset($this->functions[$job_name])){
@@ -129,7 +135,7 @@ class GearmanPeclManager extends GearmanManager {
 
         }
 
-        $this->log("($h) Starting Job: $job_name", GearmanManager::LOG_LEVEL_WORKER_INFO);
+        $this->log("($h) Starting Job: $job_name (unique: ".$job->unique().")", GearmanManager::LOG_LEVEL_WORKER_INFO);
 
         $this->log("($h) Workload: $w", GearmanManager::LOG_LEVEL_DEBUG);
 
