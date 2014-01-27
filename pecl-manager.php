@@ -13,7 +13,6 @@
 declare(ticks = 1);
 
 require dirname(__FILE__)."/GearmanManager.php";
-require dirname(__FILE__)."/JobFailProtection.php";
 
 /**
  * Implements the worker portions of the pecl/gearman library

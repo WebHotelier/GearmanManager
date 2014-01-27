@@ -10,8 +10,10 @@
 class JobFailProtection {
 
   const MaxTriesPerJobs = 3;
-  const CacheForSeconds = 300; // 5 minutes
+  const CacheForSeconds = 600; // 5 minutes
   const ApcPrefix = 'GearmanManager_';
+
+  public static $notifyEmail = null;
 
   /**
    * push a job int the list of executed jobs
@@ -30,7 +32,9 @@ class JobFailProtection {
 
     if ($callCount > JobFailProtection::MaxTriesPerJobs) {
       // notify admins
-      mail('geeks@everyglobe.com', 'GearmanManager Reoccuring Job Failure', 'Job with id: '.$jobId.' failed multiple times. Stopped processing.');
+      if (!empty(self::$notifyEmail)) {
+        mail(self::$notifyEmail, 'GearmanManager Reoccuring Job Failure', 'Job with id: '.$jobId.' failed multiple times. Stopped processing.');
+      }
       return false;
     }
     return true;
