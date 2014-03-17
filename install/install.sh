@@ -52,12 +52,14 @@ fi
 
 
 # symlink proper library wrapper into bin
-if [ -z "${PHPLIB}" ]; then
-  echo "Which PHP library to use, pecl/gearman or PEAR::Net_Gearman?"
-  select PHPLIB in "pecl" "pear"; do
-    break
-  done
-fi
+#if [ -z "${PHPLIB}" ]; then
+#  echo "Which PHP library to use, pecl/gearman or PEAR::Net_Gearman?"
+#  select PHPLIB in "pecl" "pear"; do
+#    break
+#  done
+#fi
+
+PHPLIB="pecl"
 
 # create and populate installation folder
 mkdir -p ${INSTALL_DIR}
