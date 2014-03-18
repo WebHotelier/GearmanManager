@@ -1174,7 +1174,7 @@ abstract class GearmanManager {
         echo "  -t SECONDS     Maximum number of seconds gearmand server should wait for a worker to complete work before timing out and reissuing work to another worker.\n";
         echo "  -x SECONDS     Maximum seconds for a worker to live\n";
         echo "  -Z             Parse the command line and config file then dump it to the screen and exit.\n";
-        echo "  -n EMAIL       An email to send a notification too if a task fails multiple times.\n"
+        echo "  -n EMAIL       An email to send a notification too if a task fails multiple times.\n";
         echo "\n";
         exit();
     }
