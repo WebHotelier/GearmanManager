@@ -20,7 +20,7 @@ LOGFILE=/var/log/gearman-manager.log
 CONFIGDIR=/etc/gearman-manager
 GEARMANUSER="gearman"
 GEARMANGROUP="gearman"
-PARAMS="-c ${CONFIGDIR}/config.ini"
+PARAMS="-c ${CONFIGDIR}/config.ini -vvvv ${LOGFILE}"
 
 test -x ${DAEMON} || exit 0
 
