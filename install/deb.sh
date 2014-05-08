@@ -32,7 +32,6 @@ start()
   if ! test -d ${PIDDIR}
   then
     mkdir ${PIDDIR}
-    chown ${GEARMANUSER} ${PIDDIR}
   fi
   if start-stop-daemon \
     --start \
