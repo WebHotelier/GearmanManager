@@ -75,7 +75,7 @@ echo "Installing configs to ${CONFIG_DIR}"
 
 # create worker folders
 mkdir -p ${WORKER_DIR}
-chown gearman:gearman ${WORKER_DIR}
+# chown gearman:gearman ${WORKER_DIR}
 
 # install init script
 mv ${WORKING_DIR}/${DISTRO}.build.sh ${INIT_D}
