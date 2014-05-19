@@ -84,7 +84,7 @@ echo "Installing init script to ${INIT_D}"
 
 # touch log file and set gearman ownership
 touch /var/log/gearman-manager.log
-chown gearman:gearman /var/log/gearman-manager.log
+chown jenkins-slave:jenkins-slave /var/log/gearman-manager.log
 
 echo
 echo "Install ok!  Run ${INIT_D} to start and stop"
