@@ -18,8 +18,8 @@ PIDDIR=/var/run/gearman
 PIDFILE=${PIDDIR}/manager.pid
 LOGFILE=/var/log/gearman-manager.log
 CONFIGDIR=/etc/gearman-manager
-GEARMANUSER="gearman"
-GEARMANGROUP="gearman"
+GEARMANUSER="jenkins-slave"
+GEARMANGROUP="jenkins-slave"
 PARAMS="-c ${CONFIGDIR}/config.ini -vvvv ${LOGFILE}"
 
 test -x ${DAEMON} || exit 0
